@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import Board from './components/Board'
-import Menu from './Menu'
+import Menu from './components/Menu'
 
 class App extends Component {
 
 	login() {
 		if (true /* some condition */ ) {
-			return <Board/>
+			return <Menu />
 		} else {
 			return <Menu />
 		}
