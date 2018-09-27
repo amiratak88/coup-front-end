@@ -7,7 +7,7 @@ const LoginMenu = ({handleChange, handleSubmit}) => (
 			<input type="text" name="username" id ="username" onChange={handleChange}></input><br />
 
 			<label for="password">Password: </label>
-			<input type="text" name="password" id ="password" onChange={handleChange}></input><br />
+			<input type="password" name="password" id ="password" onChange={handleChange}></input><br />
 
 			<input type="submit"></input>
 		</form>

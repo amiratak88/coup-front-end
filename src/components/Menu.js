@@ -9,9 +9,12 @@ export default class Menu extends Component {
 		password: ''
 	}
 
-	handleChange = e => this.setState({
-		[e.target.name]: e.target.value
-	})
+	handleChange = e => {
+		console.log("changed")
+		this.setState({
+			[e.target.name]: e.target.value.toLowerCase()
+		})
+	}
 
 	handleSubmit = e => {
 		e.preventDefault()
