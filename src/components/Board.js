@@ -2,11 +2,28 @@ import React, { Component } from 'react'
 import ChallengePrompt from './ChallengePrompt'
 import Hand from './Hand'
 import ActionsList from './ActionsList'
+import cards from './../cardsData'
 
 export default class Board extends Component {
+	
 	state = {
-		isItMyTurn: true // Apply Logic
+		game: {
+			id: null,
+			isItMyTurn: true // apply logic
+		},
+		cards: {
+			myHand: [],
+			deck: []
+		}
+	}
 
+	componentDidMount() {
+		this.setState({
+			cards: {
+				myHand: [cards[1], cards[4]],
+				deck: []
+			}
+		})
 	}
 
 	render() {
@@ -17,7 +34,7 @@ export default class Board extends Component {
 			<div>
 				{/* All the other stuff like deck, bank, other players' hands */}
 				<ChallengePrompt />
-				<Hand cards={this.props.cards.myHand}/>
+				<Hand cards={this.state.cards.myHand}/>
 				<ActionsList />
 			</div>
 		)

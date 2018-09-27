@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import Card from './Card'
 
 export default class Hand extends Component {
-	renderCards() {
-		// It's probably gonna map thru an array and create cards
-	}
+	
+	renderCards = () => this.props.cards.map(c => <Card card={c}/>)
 	
 	render() {
 		// console.log("Hand State:", this.state)
@@ -13,8 +12,7 @@ export default class Hand extends Component {
 
 		return (
 			<div>
-				<Card card={this.props.cards[0]}/>
-				<Card card={this.props.cards[1]}/>
+				{this.renderCards()}
 			</div>
 		)
 	}
