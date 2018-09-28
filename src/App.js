@@ -3,37 +3,25 @@ import logo from './logo.svg'
 import './App.css'
 import Board from './components/Board'
 import Menu from './components/Menu'
+import players from './playersData'
 
 class App extends Component {
 
 	state = {
-		playerId: null,
+		playerId: 1,
 		game: {
-			players: [],
+			players: players,
 			turnId: null,
 			targetId: null,
 			phase: "declare", /* declare, challenge1, block -> challenge2, resolve */
 			chosenCard: "Captain"
 		}
-
-		/* game: {
-			players: [
-				{id: 24, name: "Amirata", hand:[{...}, {...}], wallet: 2},
-				{id: 37, name: "Gabe", hand:[{...}, {...}], wallet: 2},
-				{id: 4, name: "Kevin", hand:[{...}, {...}], wallet: 2},
-				{id: 89, name: "Nkosi", hand:[{...}, {...}], wallet: 2}
-			],
-			turnId: 37,
-			targetId: 4,
-			phase: "declare",
-			chosenCard: "Captain"
-		} */
 	}
 
 	render() {
 		return (
 			<div> {/* there was className="App" here before */}
-				{this.state.playerId ? <Board /> : <Menu />}
+				{this.state.playerId ? <Board game={this.state.game} playerId={this.state.playerId}/> : <Menu />}
 			</div>
 		)
 	}
