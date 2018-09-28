@@ -18,13 +18,15 @@ class App extends Component {
 
 		/* game: {
 			players: [
-				{id: 24, name: "Amirata", cards:[{...}, {...}], wallet: 2},
-				{id: 37, name: "Gabe", cards:[{...}, {...}], wallet: 2},
-				{id: 4, name: "Kevin", cards:[{...}, {...}], wallet: 2},
-				{id: 89, name: "Nkosi", cards:[{...}, {...}], wallet: 2}
+				{id: 24, name: "Amirata", hand:[{...}, {...}], wallet: 2},
+				{id: 37, name: "Gabe", hand:[{...}, {...}], wallet: 2},
+				{id: 4, name: "Kevin", hand:[{...}, {...}], wallet: 2},
+				{id: 89, name: "Nkosi", hand:[{...}, {...}], wallet: 2}
 			],
 			turnId: 37,
-			targetId: 4
+			targetId: 4,
+			phase: "declare",
+			chosenCard: "Captain"
 		} */
 	}
 
