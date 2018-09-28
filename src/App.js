@@ -7,13 +7,13 @@ import Menu from './components/Menu'
 class App extends Component {
 
 	state = {
-		// id: null
-		playerId: 0,
+		playerId: null,
 		game: {
 			players: [],
-			turnId: 0,
-			targetId: 0,
-			phase: "" /* declare, challenge1, block -> challenge2, resolve */ 
+			turnId: null,
+			targetId: null,
+			phase: "declare", /* declare, challenge1, block -> challenge2, resolve */
+			chosenCard: "Captain"
 		}
 
 		/* game: {
