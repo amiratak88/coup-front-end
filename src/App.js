@@ -8,13 +8,30 @@ class App extends Component {
 
 	state = {
 		// id: null
-		id: 0
+		playerId: 0,
+		game: {
+			players: [],
+			turnId: 0,
+			targetId: 0,
+			phase: "" /* declare, challenge1, block -> challenge2, resolve */ 
+		}
+
+		/* game: {
+			players: [
+				{id: 24, name: "Amirata", cards:[{...}, {...}], wallet: 2},
+				{id: 37, name: "Gabe", cards:[{...}, {...}], wallet: 2},
+				{id: 4, name: "Kevin", cards:[{...}, {...}], wallet: 2},
+				{id: 89, name: "Nkosi", cards:[{...}, {...}], wallet: 2}
+			],
+			turnId: 37,
+			targetId: 4
+		} */
 	}
 
 	render() {
 		return (
 			<div> {/* there was className="App" here before */}
-				{this.state.id ? <Board /> : <Menu />}
+				{this.state.playerId ? <Board /> : <Menu />}
 			</div>
 		)
 	}
