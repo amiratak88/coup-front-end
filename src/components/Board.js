@@ -5,7 +5,7 @@ import ActionsList from './ActionsList'
 import cards from './../cardsData'
 
 export default class Board extends Component {
-	
+
 	state = {
 		game: {
 			id: null,

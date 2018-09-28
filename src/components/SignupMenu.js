@@ -3,13 +3,13 @@ import React from 'react'
 const SignupMenu = ({handleChange, handleSubmit}) => (
 	<div>
 		<form onSubmit={handleSubmit}>
-			<label for="username"></label>
+			<label htmlFor="username">Username: </label>
 			<input type="text" name="username" id ="username" onChange={handleChange}></input><br />
 
-			<label for="password"></label>
+			<label htmlFor="password">Password: </label>
 			<input type="password" name="password" id ="password" onChange={handleChange}></input><br />
 
-			<label for="confirm-password"></label>
+			<label htmlFor="confirm-password">Confirm password: </label>
 			<input type="password" name="confrim-password" id ="confirm-password" onChange={handleChange}></input><br />
 
 			<input type="submit"></input>

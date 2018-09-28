@@ -6,18 +6,15 @@ import Menu from './components/Menu'
 
 class App extends Component {
 
-	login() {
-		if (true /* some condition */ ) {
-			return <Menu />
-		} else {
-			return <Menu />
-		}
+	state = {
+		// id: null
+		id: 0
 	}
 
 	render() {
 		return (
 			<div> {/* there was className="App" here before */}
-				{this.login()}
+				{this.state.id ? <Board /> : <Menu />}
 			</div>
 		)
 	}
