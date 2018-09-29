@@ -18,8 +18,8 @@ class App extends Component {
 		}
 	}
 
-	takeAction(e, {name}) {
-		console.log(name)
+	takeAction(e, {name: action}) {
+		console.log(action)
 	}
 
 	render() {
