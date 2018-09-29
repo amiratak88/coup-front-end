@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 // import ChallengePrompt from './ChallengePrompt'
 import ActionsList from './ActionsList'
-// import cards from './../cardsData'
 import { Grid } from 'semantic-ui-react'
 import Player from './Player'
 
