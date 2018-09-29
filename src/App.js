@@ -18,10 +18,14 @@ class App extends Component {
 		}
 	}
 
+	takeAction(e, {name}) {
+		console.log(name)
+	}
+
 	render() {
 		return (
 			<div> {/* there was className="App" here before */}
-				{this.state.playerId ? <Board game={this.state.game} playerId={this.state.playerId}/> : <Menu />}
+				{this.state.playerId ? <Board game={this.state.game} playerId={this.state.playerId} takeAction={this.takeAction}/> : <Menu />}
 			</div>
 		)
 	}
