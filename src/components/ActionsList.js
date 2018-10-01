@@ -3,7 +3,7 @@ import { Menu } from 'semantic-ui-react'
 
 const ActionsList = ({takeAction}) => (
 
-	<Menu secondary vertical>
+	<Menu secondary vertical style={{fontSize: '1.5em'}}>
 		<Menu.Item
 			name='income'
 			onClick={takeAction}

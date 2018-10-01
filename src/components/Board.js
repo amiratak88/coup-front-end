@@ -11,7 +11,7 @@ export default class Board extends Component {
 			if (this.props.playerId !== p.id) {
 				return (
 					<Grid.Column  key ={p.id} color='red'>
-						<Player player={p} disabled={true}/>
+						<Player player={p} disabled={true} isMe={false} />
 					</Grid.Column>
 				)
 			}
@@ -26,22 +26,22 @@ export default class Board extends Component {
 
 		return (
 			<Grid style={{height: '100vh'}}>
-					<Grid.Row columns={3} style={{height: '43%'}}>
-						{this.getOpponents()}
-					</Grid.Row>
+				<Grid.Row columns={3} style={{height: '43%'}}>
+					{this.getOpponents()}
+				</Grid.Row>
 
-					<Grid.Row style={{height: '67%'}}>
-						<Grid.Column color='yellow' width={3}>
-							notifications
-						</Grid.Column>
-						<Grid.Column color='black' width={10}>
-							<Player player={players.find(p => p.id === this.props.playerId)} disabled={false} />
-						</Grid.Column>
-						<Grid.Column color='pink' width={3}>
-							<ActionsList takeAction={takeAction} />
-						</Grid.Column>
-					</Grid.Row>
-				</Grid>
+				<Grid.Row style={{height: '57%'}}>
+					<Grid.Column color='yellow' width={3}>
+						notifications
+					</Grid.Column>
+					<Grid.Column color='black' width={10}>
+						<Player player={players.find(p => p.id === this.props.playerId)} isMe={true} />
+					</Grid.Column>
+					<Grid.Column color='pink' width={3}>
+						<ActionsList takeAction={takeAction} />
+					</Grid.Column>
+				</Grid.Row>
+			</Grid>
 		)
 	}
 }

@@ -5,8 +5,8 @@ import SignupMenu from './SignupMenu'
 export default class Menu extends Component {
 
 	state = {
-		username: '',
-		password: ''
+		username: ''
+		// password: ''
 	}
 
 	handleChange = e => {
@@ -18,18 +18,24 @@ export default class Menu extends Component {
 
 	handleSubmit = e => {
 		e.preventDefault()
-		console.log("Submitted")
+		fetch(this.props.API + "users", {
+			method: "POST",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({name: this.state.username})
+		})
+		.then(res => res.json()).then(console.log)
 	}
 
 	renderForm() {
 		if ( true /* Some Condition */ ) {
-			return <LoginMenu handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+			return <SignupMenu handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
 		} else {
 			return <SignupMenu />
 		}
 	}
 	
 	render() {
+		console.log(this.state)
 		return (
 			<div>
 				{this.renderForm()}
