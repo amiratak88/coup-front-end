@@ -19,8 +19,8 @@ export default class Board extends Component {
 	}
 
 	render() {
-		// console.log("Board State:", this.state)
-		// console.log("Board Props:", this.props)
+		console.log("Board State:", this.state)
+		console.log("Board Props:", this.props)
 
 		const {game: {players}, playerId, takeAction} = this.props
 
