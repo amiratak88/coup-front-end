@@ -28,14 +28,16 @@ class App extends Component {
 			completed: false,
 			phase: "declare", /* declare, challenge1, block -> challenge2, resolve */
 			players: fourPlayers,
-			turnId: null,
+			turnId: 1,
 			action: null,
-			targetId: null
+			targetId: null,
+			challengerId: null,
+			challengeeId: null
 		}
 	}
 
 	renderScreen() {
-		const { playerId, match} = this.state
+		const { playerId, match } = this.state
 
 		if (playerId && match.players.length === 4) {
 			return <Board match={match} playerId={playerId} takeAction={this.takeAction} />
@@ -62,7 +64,7 @@ class App extends Component {
 	}
 
 	takeAction(e, {name: action}) {
-		console.log(action)
+		this.setState({action: action, phase: "challenge"})
 	}
 
 	render() {
