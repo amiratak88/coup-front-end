@@ -22,7 +22,8 @@ export default class Board extends Component {
 		console.log("Board State:", this.state)
 		console.log("Board Props:", this.props)
 
-		const {match: {players}, playerId, takeAction} = this.props
+		const {match: { players, turnId }, playerId, takeAction} = this.props
+		const player = players.find(p => p.id === playerId)
 
 		return (
 			<Grid style={{height: '100vh'}}>
@@ -38,7 +39,7 @@ export default class Board extends Component {
 						<Player player={players.find(p => p.id === this.props.playerId)} isMe={true} />
 					</Grid.Column>
 					<Grid.Column color='pink' width={3}>
-						<ActionsList takeAction={takeAction} />
+						<ActionsList takeAction={takeAction} playerId={playerId} turnId={turnId} player={player} />
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
