@@ -7,7 +7,7 @@ import Player from './Player'
 export default class Board extends Component {
 
 	getOpponents() {
-		return this.props.game.players.map(p => {
+		return this.props.match.players.map(p => {
 			if (this.props.playerId !== p.id) {
 				return (
 					<Grid.Column  key ={p.id} color='red'>
@@ -22,7 +22,7 @@ export default class Board extends Component {
 		console.log("Board State:", this.state)
 		console.log("Board Props:", this.props)
 
-		const {game: {players}, playerId, takeAction} = this.props
+		const {match: {players}, playerId, takeAction} = this.props
 
 		return (
 			<Grid style={{height: '100vh'}}>

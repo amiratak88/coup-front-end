@@ -4,7 +4,7 @@ import './App.css'
 import Board from './components/Board'
 import Login from './components/Login'
 import WaitingScreen from './components/WaitingScreen'
-import {threePlayers, fourPlayers}  from './usersData'
+import {threePlayers, fourPlayers}  from './playersData'
 
 const API = "http://localhost:3000/"
 
@@ -22,31 +22,31 @@ const cards = [
 class App extends Component {
 
 	state = {
-		userId: 1,
+		playerId: 1,
 		match: {
 			id: null,
 			completed: false,
-			phase: "Declare", /* declare, challenge1, block -> challenge2, resolve */
-			turn: null,
-			declared: 0,
-			target: null,
-			players: fourPlayers
+			phase: "declare", /* declare, challenge1, block -> challenge2, resolve */
+			players: fourPlayers,
+			turnId: null,
+			action: null,
+			targetId: null
 		}
 	}
 
 	renderScreen() {
-		const { userId, match} = this.state
+		const { playerId, match} = this.state
 
-		if (userId && match.players.length === 4) {
-			return <Board match={match} userId={userId} takeAction={this.takeAction} />
-		} else if (userId) {
+		if (playerId && match.players.length === 4) {
+			return <Board match={match} playerId={playerId} takeAction={this.takeAction} />
+		} else if (playerId) {
 			return <WaitingScreen players={match.players}/>
 		} else {
 			return <Login handleSubmit={this.handleSubmit}/>
 		}
 	}
 
-	handleSubmit = name =>  {
+	handleSubmit = name => {
 		fetch(API + "users", {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
@@ -68,7 +68,7 @@ class App extends Component {
 	render() {
 		console.log("APP", this.state)
 		return (
-			<div> {/* there was className="App" here before */}	
+			<div> {/* there was className="App" here before */}
 				{this.renderScreen()}
 			</div>
 		)

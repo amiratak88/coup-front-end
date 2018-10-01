@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Header, Image, Modal } from 'semantic-ui-react'
 
-class ModalExampleDimmer extends Component {
+class ChallengePrompt extends Component {
 	state = { open: false }
 
 	show = dimmer => () => this.setState({ dimmer, open: true })
@@ -44,4 +44,4 @@ class ModalExampleDimmer extends Component {
 	}
 }
 
-export default ModalExampleDimmer
+export default ChallengePrompt
