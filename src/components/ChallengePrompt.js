@@ -49,7 +49,6 @@ class ChallengePrompt extends Component {
 						content="Nope"
 						onClick={e => {
 							this.close
-							
 						}}
 					/>
 

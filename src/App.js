@@ -21,26 +21,27 @@ const cards = [
 
 class App extends Component {
 
-	state = {
-		playerId: 2,
-		match: {
-			id: null,
-			completed: false,
-			phase: "challenge", /* take action, declare target, challenge ,block -> challenge, resolve */
-			players: fourPlayers,
-			turnId: 1,
-			action: "steal", // Only challengeable or targetable actions
-			targetId: 1,
-			challengerId: null,
-			challengedId: 1
-		}
-	}
+	// state = {
+	// 	playerId: 2,
+	// 	match: {
+	// 		id: null,
+	// 		seats: 1,
+	// 		phase: "challenge", /* take action, declare target, challenge, block -> challenge, resolve */
+	// 		turnId: 1,
+	// 		action: "steal", // Only challengeable or targetable actions
+	// 		targetId: 1,
+	// 		challengerId: null,
+	// 		challengedId: 1,
+	// 		completed: false,
+	// 		players: fourPlayers
+	// 	}
+	// }
 
 	handleSubmit = name => {
 		fetch(API + "users", {
 			method: "POST",
 			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({name: name})
+			body: JSON.stringify({username: name})
 		})
 		.then(res => res.json())
 		.then(p => this.setState({
