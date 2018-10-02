@@ -5,11 +5,7 @@ import { Menu } from 'semantic-ui-react'
 const ActionsList = ({takeAction, playerId, turnId, player: { wallet }}) => {
 
 	const enabled = playerId === turnId && wallet < 10
-	const coupEnabled = wallet >= 7 && playerId === turnId
-
-	console.log("playerId:", playerId)
-	console.log("turnId:", turnId)
-	console.log("wallet:", wallet)
+	const coupEnabled = wallet >= 7 && enabled
 
 	return (
 		<Menu secondary vertical style={{fontSize: '1.5em'}} >
