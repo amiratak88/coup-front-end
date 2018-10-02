@@ -2,10 +2,10 @@ import React from 'react'
 import { Grid, Container, Segment } from 'semantic-ui-react'
 import Card from './Card'
 
-const Player = ({player: {name, wallet, cards}, isMe}) => {
+const Player = ({ player: {id, name, wallet, cards}, isMe, declareTarget }) => {
 	return (
 		<Container style={{height: '100%'}}>
-			<Container style={{height: '17%'}} textAlign='center'>
+			<Container style={{height: '17%'}} textAlign='center' onClick={e => declareTarget(id)}>
 				{name}
 			</Container>
 			<Container style={{height: '16%'}} textAlign='center'>

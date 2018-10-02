@@ -22,11 +22,11 @@ const cards = [
 class App extends Component {
 
 	state = {
-		playerId: 1,
+		playerId: 2,
 		match: {
 			id: null,
 			completed: false,
-			phase: "declare", /* declare, challenge1, block -> challenge2, resolve */
+			phase: "take action", /* take action, declare target, challenge1 ,block -> challenge2, resolve */
 			players: fourPlayers,
 			turnId: 2,
 			action: null,
@@ -38,7 +38,7 @@ class App extends Component {
 		const { playerId, match } = this.state
 
 		if (playerId && match.players.length === 4) {
-			return <Board match={match} playerId={playerId} takeAction={this.takeAction} />
+			return <Board match={match} playerId={playerId} takeAction={this.takeAction} declareTarget={this.declareTarget}/>
 		} else if (playerId) {
 			return <WaitingScreen players={match.players}/>
 		} else {
@@ -61,8 +61,41 @@ class App extends Component {
 		.then(match => this.setState({match}))
 	}
 
-	takeAction(e, {name: action}) {
-		console.log(action)
+	takeAction = (e, {name: action}) => {
+		const { match: { players }, playerId} = this.state
+		let newPlayers = [...players]
+		switch (action) {
+			case "income":
+				newPlayers = newPlayers.map(p => {
+					return p.id === playerId ? {...p, wallet: p.wallet + 1} : p
+				})
+				this.setState({match: {...this.state.match, players: newPlayers}}) // this is not necessary we shold just patch the player
+				break
+			case "foreign aid":
+
+				break
+			case "coup":
+
+				break
+			case "tax":
+
+				break
+			case "exchange cards":
+
+				break
+			case "assasinate":
+
+				break
+			case "steal":
+
+		}
+	}
+
+	declareTarget = id => {
+		const { match: { phase }, playerId } = this.state
+		if (phase === "declare target" && id !== playerId) {
+			console.log("This id is target now:", id)
+		}
 	}
 
 	render() {
