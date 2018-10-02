@@ -5,25 +5,15 @@ import Board from './components/Board'
 import Login from './components/Login'
 import WaitingScreen from './components/WaitingScreen'
 import {threePlayers, fourPlayers}  from './playersData'
+import Adapter from './adapters/Adapter.js'
 
 const API = "http://localhost:3000/"
 
-const cards = [
-	{name: "Duke", ability: "Bank", block: "Foreign Aid", desc: "This is a good card."},
-	{name: "Assassin", ability: "Assassinate", block: "", desc: "This is a good card."},
-	{name: "Contessa", ability: "", block: "Assassinate", desc: "This is a good card."},
-	{name: "Captain", ability: "Steal", block: "Steal", desc: "This is a good card."},
-	{name: "Ambassador", ability: "Draw", block: "Steal", desc: "This is a good card."},
-	{name: "Income", ability: "Income", block: "", desc: "This is a good card."},
-	{name: "Foreign Aid", ability: "Foreign Aid", block: "", desc: "This is a good card."},
-	{name: "Coup", ability: "Coup", block: "", desc: "This is a good card."}
-]
-
 class App extends Component {
 
-	// state = {
-	// 	playerId: 2,
-	// 	match: {
+	state = {
+		playerId: 2,
+		match: {
 	// 		id: null,
 	// 		seats: 1,
 	// 		phase: "challenge", /* take action, declare target, challenge, block -> challenge, resolve */
@@ -34,21 +24,15 @@ class App extends Component {
 	// 		challengedId: 1,
 	// 		completed: false,
 	// 		players: fourPlayers
-	// 	}
-	// }
+		}
+	}
 
 	handleSubmit = name => {
-		fetch(API + "users", {
-			method: "POST",
-			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({username: name})
-		})
-		.then(res => res.json())
+		Adapter.signUp(name)
 		.then(p => this.setState({
-			userId: p.id
+			playerId: p.id
 		}))
-		.then(() => fetch(API + this.state.userId + "/join_game/"))
-		.then(res => res.json())
+		.then(() => Adapter.joinGame(this.state.playerId))
 		.then(match => this.setState({match}))
 	}
 
@@ -96,7 +80,7 @@ class App extends Component {
 	renderScreen() {
 		const { playerId, match } = this.state
 
-		if (playerId && match.players.length === 4) {
+		if (playerId && match.seats === 4) {
 			return <Board match={match} playerId={playerId} takeAction={this.takeAction} declareTarget={this.declareTarget}/>
 		} else if (playerId) {
 			return <WaitingScreen players={match.players}/>
