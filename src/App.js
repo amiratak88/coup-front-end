@@ -26,25 +26,13 @@ class App extends Component {
 		match: {
 			id: null,
 			completed: false,
-			phase: "declare target", /* take action, declare target, challenge1 ,block -> challenge2, resolve */
+			phase: "challenge", /* take action, declare target, challenge ,block -> challenge, resolve */
 			players: fourPlayers,
-			turnId: 2,
+			turnId: 1,
 			action: "steal", // Only challengeable or targetable actions
-			targetId: null,
+			targetId: 1,
 			challengerId: null,
-			challengedId: null
-		}
-	}
-
-	renderScreen() {
-		const { playerId, match } = this.state
-
-		if (playerId && match.players.length === 4) {
-			return <Board match={match} playerId={playerId} takeAction={this.takeAction} declareTarget={this.declareTarget}/>
-		} else if (playerId) {
-			return <WaitingScreen players={match.players}/>
-		} else {
-			return <Login handleSubmit={this.handleSubmit}/>
+			challengedId: 1
 		}
 	}
 
@@ -102,6 +90,18 @@ class App extends Component {
 
 	handleChallenge() {
 		this.setState({})
+	}
+
+	renderScreen() {
+		const { playerId, match } = this.state
+
+		if (playerId && match.players.length === 4) {
+			return <Board match={match} playerId={playerId} takeAction={this.takeAction} declareTarget={this.declareTarget}/>
+		} else if (playerId) {
+			return <WaitingScreen players={match.players}/>
+		} else {
+			return <Login handleSubmit={this.handleSubmit}/>
+		}
 	}
 
 	render() {

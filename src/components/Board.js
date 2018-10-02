@@ -29,7 +29,7 @@ export default class Board extends Component {
 		return (
 			<Grid style={{height: '100vh'}}>
 
-				{phase === "challenge1" && <ChallengePrompt action={action} players={players} turnId={turnId} />}
+				{(phase === "challenge" || (phase === "block")) && <ChallengePrompt match={this.props.match} playerId={this.props.playerId}/>}
 
 				<Grid.Row columns={3} style={{height: '43%'}}>
 					{this.getOpponents()}
