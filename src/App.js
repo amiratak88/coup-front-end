@@ -69,7 +69,7 @@ class App extends Component {
 				newPlayers = newPlayers.map(p => {
 					return p.id === playerId ? {...p, wallet: p.wallet + 1} : p
 				})
-				this.setState({match: {...this.state.match, players: newPlayers}}) // this is not necessary we shold just patch the player
+				this.setState({match: {...this.state.match, players: newPlayers}}) // Substitute for fetch (patch 'players/:id/')
 				break
 			case "foreign aid":
 
