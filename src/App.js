@@ -29,8 +29,10 @@ class App extends Component {
 			phase: "take action", /* take action, declare target, challenge1 ,block -> challenge2, resolve */
 			players: fourPlayers,
 			turnId: 2,
-			action: null,
-			targetId: null
+			action: null, // Only challengeable or targetable actions
+			targetId: null,
+			challengerId: null,
+			challengedId: null
 		}
 	}
 
@@ -72,29 +74,29 @@ class App extends Component {
 				this.setState({match: {...this.state.match, players: newPlayers}}) // Substitute for fetch (patch 'players/:id/')
 				break
 			case "foreign aid":
-
+				this.setState({match: {...this.state.match, phase: "challenge1", action: "foreign aid"}}) // Substitute for fetch
 				break
 			case "coup":
-
+				this.setState({match: {...this.state.match, phase: "declare target", action: "coup"}})
 				break
 			case "tax":
-
+				this.setState({match: {...this.state.match, phase: "challenge1", action: "tax"}}) // Substitute for fetch
 				break
 			case "exchange cards":
-
+				this.setState({match: {...this.state.match, phase: "challenge1", action: "exchange cards"}}) // Substitute for fetch
 				break
-			case "assasinate":
-
+			case "assassinate":
+				this.setState({match: {...this.state.match, phase: "declare target", action: "assassinate"}})
 				break
 			case "steal":
-
+				this.setState({match: {...this.state.match, phase: "declare target", action: "steal"}})
 		}
 	}
 
 	declareTarget = id => {
 		const { match: { phase }, playerId } = this.state
 		if (phase === "declare target" && id !== playerId) {
-			console.log("This id is target now:", id)
+			this.setState({match: {...this.state.match, phase: "challenge1", targetId: id}}) // Substitute for fetch
 		}
 	}
 

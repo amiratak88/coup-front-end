@@ -36,7 +36,7 @@ const ActionsList = ({takeAction, playerId, turnId, player: { wallet }, phase })
 			/>
 			<Menu.Item
 				disabled = {!enabled}
-				name='assasinate'
+				name='assassinate'
 				onClick={takeAction}
 			/>
 			<Menu.Item
