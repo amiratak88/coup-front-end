@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Modal } from 'semantic-ui-react'
 
 class ChallengePrompt extends Component {
-	state = { open: false, timer: 5}
+	state = { open: false, timer: 10}
 	
 	componentDidMount() {
 		this.setState({open: true, dimmer: "blurring"})
@@ -19,14 +19,16 @@ class ChallengePrompt extends Component {
 	render() {
 		console.log("Challenge Prompt STATE", this.state)
 		const { open, dimmer } = this.state
+		const { players, turnId, action} = this.props
+		const turnPlayer = players.find(p => p.id === turnId)
 
 		return (
 			<div>
 
 				<Modal dimmer={dimmer} open={open} onClose={this.close}>
 					<Modal.Content >
-						<p>We've found the following gravatar image associated with your e-mail address.</p>
-						<p>Is it okay to use this photo?</p>
+						<p>{turnPlayer.name} is trying to {action}</p>
+						<p>Challenege them if you think they're bluffing</p>
 					</Modal.Content>
 					<Modal.Actions>
 						<Button

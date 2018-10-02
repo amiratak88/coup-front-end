@@ -23,13 +23,13 @@ export default class Board extends Component {
 		// console.log("Board State:", this.state)
 		// console.log("Board Props:", this.props)
 
-		const { match: { players, turnId, phase }, playerId, takeAction, declareTarget } = this.props
+		const { match: { players, turnId, phase, action }, playerId, takeAction, declareTarget } = this.props
 		const player = players.find(p => p.id === playerId)
 
 		return (
 			<Grid style={{height: '100vh'}}>
 
-				{phase === "challenge1" && <ChallengePrompt />}
+				{phase === "challenge1" && <ChallengePrompt action={action} players={players} turnId={turnId} />}
 
 				<Grid.Row columns={3} style={{height: '43%'}}>
 					{this.getOpponents()}

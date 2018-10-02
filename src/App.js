@@ -26,10 +26,10 @@ class App extends Component {
 		match: {
 			id: null,
 			completed: false,
-			phase: "take action", /* take action, declare target, challenge1 ,block -> challenge2, resolve */
+			phase: "declare target", /* take action, declare target, challenge1 ,block -> challenge2, resolve */
 			players: fourPlayers,
 			turnId: 2,
-			action: null, // Only challengeable or targetable actions
+			action: "steal", // Only challengeable or targetable actions
 			targetId: null,
 			challengerId: null,
 			challengedId: null
@@ -98,6 +98,10 @@ class App extends Component {
 		if (phase === "declare target" && id !== playerId) {
 			this.setState({match: {...this.state.match, phase: "challenge1", targetId: id}}) // Substitute for fetch
 		}
+	}
+
+	handleChallenge() {
+		this.setState({})
 	}
 
 	render() {
