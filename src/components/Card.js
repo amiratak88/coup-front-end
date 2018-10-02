@@ -4,7 +4,7 @@ import { Image, Reveal, Container } from 'semantic-ui-react'
 const getImgURL = name => require(`./../assets/images/${name.toLowerCase()}.png`)
 const getBackImg  = () => require('./../assets/images/back.png')
 
-const revealedCard = ({name, ability, desc}) => (
+const revealedCard = ({ deck: { card:{ name, desc, ability } } }) => (
 		<Reveal animated='small fade' instant style={{height: '100%', width: '100%'}} >
 			<Reveal.Content visible style={{height: '100%', width: '100%'}}>
 				<Image src={getImgURL(name)} rounded centered style={{height: '100%'}}/>
@@ -27,11 +27,11 @@ const opponentCard = (card) => {
 	}
 }
 
-const Card = ({ card, isMe }) => {
+const Card = ({ hand, isMe }) => {
 	if (isMe) {
-		return revealedCard(card)
+		return revealedCard(hand)
 	} else {
-		return opponentCard(card)
+		return opponentCard(hand)
 	}
 }
 

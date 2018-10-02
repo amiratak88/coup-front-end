@@ -1,4 +1,4 @@
-const API = "https://localhost:3000/"
+const API = "https://coup-server.herokuapp.com/"
 
 export default class Adapter {
 

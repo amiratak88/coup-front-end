@@ -6,13 +6,15 @@ import Login from './components/Login'
 import WaitingScreen from './components/WaitingScreen'
 import {threePlayers, fourPlayers}  from './playersData'
 import Adapter from './adapters/Adapter.js'
+import {  ActionCable } from 'react-actioncable-provider'
+
 
 const API = "http://localhost:3000/"
 
 class App extends Component {
 
 	state = {
-		playerId: 2,
+		playerId: null,
 		match: {
 	// 		id: null,
 	// 		seats: 1,
@@ -82,7 +84,7 @@ class App extends Component {
 
 		if (playerId && match.seats === 4) {
 			return <Board match={match} playerId={playerId} takeAction={this.takeAction} declareTarget={this.declareTarget}/>
-		} else if (playerId) {
+		} else if (playerId && match.seats < 4) {
 			return <WaitingScreen players={match.players}/>
 		} else {
 			return <Login handleSubmit={this.handleSubmit}/>
@@ -93,9 +95,17 @@ class App extends Component {
 		console.log("APP", this.state)
 		return (
 			<div> {/* there was className="App" here before */}
+				<ActionCable
+					channel={{ channel: 'MatchChannel', id: `${this.state.match.id}`}}
+					onReceived={this.handleReceivedMatch}
+				/>
 				{this.renderScreen()}
 			</div>
 		)
+	}
+
+	handleReceivedMatch = res => {
+		this.setState({match: res})
 	}
 }
 
