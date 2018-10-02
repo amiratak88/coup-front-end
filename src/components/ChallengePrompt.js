@@ -1,40 +1,47 @@
 import React, { Component } from 'react'
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import { Button, Modal } from 'semantic-ui-react'
 
 class ChallengePrompt extends Component {
-	state = { open: false }
+	state = { open: false, timer: 5}
+	
+	componentDidMount() {
+		this.setState({open: true, dimmer: "blurring"})
+		this.inv = setInterval(() => this.setState({timer: this.state.timer - 1}), 1000)
+	}
 
-	show = dimmer => () => this.setState({ dimmer, open: true })
-	close = () => this.setState({ open: false })
-
+	componentDidUpdate() {
+		if (this.state.timer === 0) {
+			this.setState({open: false, timer: 5})
+			clearInterval(this.inv)
+		}
+	}
+	
 	render() {
+		console.log("Challenge Prompt STATE", this.state)
 		const { open, dimmer } = this.state
 
 		return (
 			<div>
-				<Button onClick={this.show(true)}>Default</Button>
-				<Button onClick={this.show('inverted')}>Inverted</Button>
-				<Button onClick={this.show('blurring')}>Blurring</Button>
 
 				<Modal dimmer={dimmer} open={open} onClose={this.close}>
-					<Modal.Header>Select a Photo</Modal.Header>
-					<Modal.Content image>
-						<Image wrapped size='medium' src='https://react.semantic-ui.com/images/avatar/large/rachel.png' />
-						<Modal.Description>
-							<Header>Default Profile Image</Header>
-							<p>We've found the following gravatar image associated with your e-mail address.</p>
-							<p>Is it okay to use this photo?</p>
-						</Modal.Description>
+					<Modal.Content >
+						<p>We've found the following gravatar image associated with your e-mail address.</p>
+						<p>Is it okay to use this photo?</p>
 					</Modal.Content>
 					<Modal.Actions>
-						<Button color='black' onClick={this.close}>
-							Nope
-            </Button>
+						<Button
+							negative
+							icon='close'
+							labelPosition='right'
+							content="Nope"
+							onClick={this.close}
+						/>
+
 						<Button
 							positive
 							icon='checkmark'
 							labelPosition='right'
-							content="Yep, that's me"
+							content="Challenge"
 							onClick={this.close}
 						/>
 					</Modal.Actions>

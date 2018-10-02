@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Container, Segment } from 'semantic-ui-react'
+import { Grid, Container } from 'semantic-ui-react'
 import Card from './Card'
 
 const Player = ({ player: {id, name, wallet, cards}, isMe, declareTarget }) => {
