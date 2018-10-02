@@ -12,7 +12,7 @@ export const fourPlayers = [
 		{id: 4, name: "duke", active: true}
 	]},
 	{id: 4, name: "Kevin", wallet: 9, cards: [
-		{id: 1, name: "captain", active: true},
+		{id: 1, name: "captain", , active: true},
 		{id: 4, name: "duke", active: true}
 	]}
 ]
