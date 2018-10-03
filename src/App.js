@@ -31,10 +31,8 @@ class App extends Component {
 
 	handleSubmit = name => {
 		Adapter.signUp(name)
-		.then(p => this.setState({
-			playerId: p.id
-		}))
-		.then(() => Adapter.joinGame(this.state.playerId))
+		.then(p => p.id)
+		.then(id => Adapter.joinGame(id))
 		.then(match => this.setState({
 			match: match,
 			playerId: match.players[match.players.length - 1].id
