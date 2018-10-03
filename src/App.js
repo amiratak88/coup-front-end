@@ -85,7 +85,7 @@ class App extends Component {
 
 		if (playerId && match.seats === 4) {
 			if (!match.turnId) {
-				Adapter.setTurnId(match.id, match.player[0].id)
+				Adapter.setTurnId(match.id, match.players[0].id)
 			}
 			return <Board match={match} playerId={playerId} takeAction={this.takeAction} declareTarget={this.declareTarget}/>
 		} else if (playerId && match.seats < 4) {
