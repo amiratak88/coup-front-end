@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import ChallengePrompt from './ChallengePrompt'
+import ChallengePrompt from './ChallengePrompt'
 import ActionsList from './ActionsList'
 import { Grid } from 'semantic-ui-react'
 import Player from './Player'
@@ -7,11 +7,12 @@ import Player from './Player'
 export default class Board extends Component {
 
 	getOpponents() {
+		const { declareTarget } = this.props
 		return this.props.match.players.map(p => {
 			if (this.props.playerId !== p.id) {
 				return (
 					<Grid.Column  key ={p.id} color='red'>
-						<Player player={p} disabled={true} isMe={false} />
+						<Player player={p} disabled={true} isMe={false} declareTarget={declareTarget} />
 					</Grid.Column>
 				)
 			}
@@ -19,14 +20,17 @@ export default class Board extends Component {
 	}
 
 	render() {
-		console.log("Board State:", this.state)
-		console.log("Board Props:", this.props)
+		// console.log("Board State:", this.state)
+		// console.log("Board Props:", this.props)
 
-		const {match: { players, turnId }, playerId, takeAction} = this.props
+		const { match: { players, turnId, phase, action }, playerId, takeAction, declareTarget } = this.props
 		const player = players.find(p => p.id === playerId)
 
 		return (
 			<Grid style={{height: '100vh'}}>
+
+				{(phase === "challenge" || (phase === "block")) && <ChallengePrompt match={this.props.match} playerId={this.props.playerId}/>}
+
 				<Grid.Row columns={3} style={{height: '43%'}}>
 					{this.getOpponents()}
 				</Grid.Row>
@@ -36,10 +40,10 @@ export default class Board extends Component {
 						notifications
 					</Grid.Column>
 					<Grid.Column color='black' width={10}>
-						<Player player={players.find(p => p.id === this.props.playerId)} isMe={true} />
+						<Player player={players.find(p => p.id === this.props.playerId)} isMe={true} declareTarget={declareTarget}/>
 					</Grid.Column>
 					<Grid.Column color='pink' width={3}>
-						<ActionsList takeAction={takeAction} playerId={playerId} turnId={turnId} player={player} />
+						<ActionsList takeAction={takeAction} playerId={playerId} turnId={turnId} player={player} phase={phase} />
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>

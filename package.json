@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^16.5.2",
+    "react-actioncable-provider": "^1.0.3",
     "react-dom": "^16.5.2",
     "react-scripts": "1.1.5",
     "semantic-ui-css": "^2.4.0",
