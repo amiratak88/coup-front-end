@@ -97,7 +97,7 @@ class App extends Component {
 		return (
 			<div> {/* there was className="App" here before */}
 				<ActionCable
-					channel={{ channel: 'MatchChannel', id: `${this.state.match.id}`}}
+					channel={{ channel: 'MatchChannel', id: 4}}
 					onReceived={this.handleReceivedMatch}
 				/>
 				{this.renderScreen()}
@@ -106,8 +106,11 @@ class App extends Component {
 	}
 
 	handleReceivedMatch = res => {
+		console.log(res)
 		this.setState({match: res})
 	}
 }
 
 export default App;
+
+// `${this.state.match.id}`
