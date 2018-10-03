@@ -97,7 +97,7 @@ class App extends Component {
 		return (
 			<div> {/* there was className="App" here before */}
 				<ActionCable
-					channel={{ channel: 'MatchChannel', id: 4}}
+					channel={{ channel: 'MatchChannel', id: this.state.match.id}}
 					onReceived={this.handleReceivedMatch}
 				/>
 				{this.renderScreen()}
@@ -112,5 +112,3 @@ class App extends Component {
 }
 
 export default App;
-
-// `${this.state.match.id}`
