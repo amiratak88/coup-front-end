@@ -6,7 +6,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {  ActionCableProvider } from 'react-actioncable-provider'
 
-const APIWS = "ws://coup-server.herokuapp.com/cable"
+const APIWS = "wss://coup-server.herokuapp.com/cable"
 
 ReactDOM.render(
 	<ActionCableProvider url={APIWS}>
