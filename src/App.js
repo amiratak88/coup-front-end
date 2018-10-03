@@ -35,7 +35,10 @@ class App extends Component {
 			playerId: p.id
 		}))
 		.then(() => Adapter.joinGame(this.state.playerId))
-		.then(match => this.setState({match}))
+		.then(match => this.setState({
+			match: match,
+			playerId: match.players[match.players.length - 1].id
+		}))
 	}
 
 	takeAction = (e, {name: action}) => {
@@ -92,7 +95,7 @@ class App extends Component {
 	}
 
 	render() {
-		console.log("APP", this.state)
+		// console.log("APP", this.state)
 		return (
 			<div> {/* there was className="App" here before */}
 				<ActionCable

@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Container } from 'semantic-ui-react'
 import Card from './Card'
 
-const Player = ({ player: {id, user: { username }, wallet, hands}, isMe, declareTarget }) => {
+const Player = ({ player: { id, user: { username }, wallet, hands }, isMe, declareTarget }) => {
 	return (
 		<Container style={{height: '100%'}}>
 			<Container style={{height: '17%'}} textAlign='center' onClick={e => declareTarget(id)}>

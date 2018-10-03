@@ -7,6 +7,7 @@ import Player from './Player'
 export default class Board extends Component {
 
 	getOpponents() {
+		console.log("Board Props:", this.props)		
 		const { declareTarget } = this.props
 		return this.props.match.players.map(p => {
 			if (this.props.playerId !== p.id) {
@@ -21,7 +22,7 @@ export default class Board extends Component {
 
 	render() {
 		// console.log("Board State:", this.state)
-		// console.log("Board Props:", this.props)
+		console.log("Board Props:", this.props)
 
 		const { match: { players, turnId, phase, action }, playerId, takeAction, declareTarget } = this.props
 		const player = players.find(p => p.id === playerId)
@@ -29,7 +30,7 @@ export default class Board extends Component {
 		return (
 			<Grid style={{height: '100vh'}}>
 
-				{(phase === "challenge" || (phase === "block")) && <ChallengePrompt match={this.props.match} playerId={this.props.playerId}/>}
+				{(phase === "challenge" || phase === "block") && <ChallengePrompt match={this.props.match} playerId={this.props.playerId}/>}
 
 				<Grid.Row columns={3} style={{height: '43%'}}>
 					{this.getOpponents()}
