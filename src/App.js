@@ -108,6 +108,7 @@ class App extends Component {
 	}
 
 	handleReceivedMatch = res => {
+		console.log(res)
 		this.setState({match: res})
 	}
 }
