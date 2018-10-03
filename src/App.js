@@ -93,7 +93,7 @@ class App extends Component {
 	}
 
 	render() {
-		// console.log("APP", this.state)
+		console.log("APP", this.state)
 		return (
 			<div> {/* there was className="App" here before */}
 				<ActionCable
