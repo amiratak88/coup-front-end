@@ -97,7 +97,7 @@ class App extends Component {
 		console.log("match id", this.state.match.id)
 		return (
 			<div> {/* there was className="App" here before */}
-				{this.state.match.id ? <ActionCable
+				{this.state.match.id !== undefined ? <ActionCable
 					channel={{ channel: 'MatchChannel', id: this.state.match.id}}
 					onReceived={this.handleReceivedMatch}
 				/> : null}
