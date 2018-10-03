@@ -91,28 +91,6 @@ class App extends Component {
 		}
 	}
 
-<<<<<<< HEAD
-	handleSubmit = name => {
-		fetch(API + "users", {
-			method: "POST",
-			headers: {"Content-Type": "application/json"},
-			body: JSON.stringify({name: name})
-		})
-		.then(res => res.json())
-		.then(p => this.setState({
-			userId: p.id
-		}))
-		.then(() => fetch(API + this.state.userId + "/join_game/"))
-		.then(res => res.json())
-		.then(match => this.setState({match}))
-	}
-
-	takeAction(e, {name: action}) {
-		this.setState({action: action, phase: "challenge"})
-	}
-
-=======
->>>>>>> amirata
 	render() {
 		console.log("APP", this.state)
 		return (
