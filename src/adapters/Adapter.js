@@ -18,7 +18,8 @@ export default class Adapter {
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({ user_id: userId })
 		})
-		.then(res => res.json()) // Returns match object
+		.then(res => res.json())
+		.then(console.log)
 	}
 	
 }
