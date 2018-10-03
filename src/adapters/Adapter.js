@@ -18,13 +18,6 @@ export default class Adapter {
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({ user_id: userId })
 		})
-<<<<<<< HEAD
-=======
-		.then(res => {
-			console.log(res)
-			return res
-		})
->>>>>>> 6b5a20f07b391a13cec692338995ad6ebe79ee0c
 		.then(res => res.json())
 	}
 	
