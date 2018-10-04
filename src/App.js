@@ -79,6 +79,7 @@ class App extends Component {
 	}
 
 	handleChallenge() {
+		const { challengedId } = this.state.match
 		const challengedPlayer = this.state.match.players.find(p  => p.id === challengedId)
 		const activeHands = challengedPlayer.hands.filter(h => h.active)
 		const wasNotLying = activeHands.some(h => h.deck.card.ability.toLowerCase() === this.state.match.action)
@@ -137,7 +138,8 @@ class App extends Component {
 
 	handleLoseCard = (handId, playerId) => {
 
-		const { match: {challengerId, challengerId, turnId} } = this.state
+
+		const { match: {challengerId, challengedId, turnId} } = this.state
 		if (this.state.match.phase === "challenger loses a card") {
 			this.state.match.challengerId === playerId && Adapter.updateHands(handId, {active: false})
 			if (challengerId === turnId) {
@@ -171,6 +173,7 @@ class App extends Component {
 	}
 
 	resolveAction() {
+		const { action, turnId } = this.state.match
 		switch (action) {
 			case "foreign aid":
 				Adapter.updateMatch(this.state.match.id, {phase: "challenge", action: "foreign aid", challengedId: turnId})
