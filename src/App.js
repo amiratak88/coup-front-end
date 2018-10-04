@@ -7,6 +7,7 @@ import WaitingScreen from './components/WaitingScreen'
 import {threePlayers, fourPlayers}  from './playersData'
 import Adapter from './adapters/Adapter.js'
 import {  ActionCable } from 'react-actioncable-provider'
+import ChallengePrompt from './components/ChallengePrompt';
 
 
 const API = "http://localhost:3000/"
@@ -42,51 +43,66 @@ class App extends Component {
 	}
 
 	takeAction = (e, {name: action}) => {
-		const { match: { players }, playerId} = this.state
+		const { match: { players, turnId }, playerId} = this.state
 		let newPlayers = [...players]
+		const currentPlayer = players.find(p => p.id === turnId)
 		switch (action) {
 			case "income":
-				newPlayers = newPlayers.map(p => {
-					return p.id === playerId ? {...p, wallet: p.wallet + 1} : p
-				})
-				this.setState({match: {...this.state.match, players: newPlayers}}) // Substitute for fetch (patch 'players/:id/')
+				Adapter.updateWallet(turnId, currentPlayer.wallet + 1)
+				.then(() => this.nextTurn()) //////////////// Come back to this
 				break
 			case "foreign aid":
-				this.setState({match: {...this.state.match, phase: "challenge1", action: "foreign aid"}}) // Substitute for fetch
+				Adapter.updateMatch(this.state.match.id, {phase: "challenge", action: "foreign aid", challengedId: turnId})
 				break
 			case "coup":
-				this.setState({match: {...this.state.match, phase: "declare target", action: "coup"}})
+				Adapter.updateMatch({phase: "declare target", action: "coup"})
 				break
 			case "tax":
-				this.setState({match: {...this.state.match, phase: "challenge1", action: "tax"}}) // Substitute for fetch
+				Adapter.updateMatch({phase: "declare target", action: "tax"})				
 				break
 			case "exchange cards":
-				this.setState({match: {...this.state.match, phase: "challenge1", action: "exchange cards"}}) // Substitute for fetch
+				Adapter.updateMatch({phase: "challenge", action: "exchange cards", challengedId: turnId})								
 				break
 			case "assassinate":
-				this.setState({match: {...this.state.match, phase: "declare target", action: "assassinate"}})
+				Adapter.updateMatch({phase: "declare target", action: "assassinate"})								
 				break
 			case "steal":
-				this.setState({match: {...this.state.match, phase: "declare target", action: "steal"}})
+				Adapter.updateMatch({phase: "declare target", action: "steal"})								
 		}
 	}
 
 	declareTarget = id => {
-		const { match: { phase }, playerId } = this.state
+		const { match: { phase, turnId }, playerId } = this.state
 		if (phase === "declare target" && id !== playerId) {
-			this.setState({match: {...this.state.match, phase: "challenge1", targetId: id}}) // Substitute for fetch
+			Adapter.updateMatch({phase: "challenge", targetId: id, challengedId: turnId})
 		}
 	}
 
 	handleChallenge() {
-		this.setState({})
+		const challengedPlayer = this.state.match.players.find(p  => p.id === challengedId)
+		const activeHands = challengedPlayer.hands.filter(h => h.active)
+		const wasNotLying = activeHands.some(h => h.deck.card.ability.toLowerCase() === this.state.match.action)
+		if (wasNotLying) {
+			Adapter.updateMatch(this.state.match.id, {phase: "challenger loses a card"})
+		} else {
+			Adapter.updateMatch(this.state.match.id, {phase: "challenged loses a card"})
+		}
 	}
 
 	renderScreen() {
 		const { playerId, match } = this.state
+		const { match: { phase, challengedId, challengerId }} = this.state
 
 		if (playerId && match.seats === 4) {
-			return <Board match={match} playerId={playerId} takeAction={this.takeAction} declareTarget={this.declareTarget}/>
+			if (!match.turnId) {
+				Adapter.setTurnId(match.id, match.players[0].id)
+			}
+			if (phase === "challenger loses a card" && challengerId === playerId) {
+				alert("You lost the challenge! Choose a card to show!")
+			} else if (phase === "challenged loses a card" && challengedId === playerId) {
+				alert("You lost the challenge! Choose a card to show!")
+			}
+			return <Board match={match} playerId={playerId} takeAction={this.takeAction} declareTarget={this.declareTarget} handleChallenge={this.handleChallenge} handleLoseCard={this.handleLoseCard}handleBlock={this.handleBlock}/>
 		} else if (playerId && match.seats < 4) {
 			return <WaitingScreen players={match.players}/>
 		} else {
@@ -111,6 +127,72 @@ class App extends Component {
 		console.log(res)
 		this.setState({match: res})
 	}
+
+	nexTurn() {
+		const playerIds = this.state.match.players.map(p => p.id)
+		const currentTurnIndex = playerIds.indexOf(this.state.turnId)
+		const nextTurnId = playerIds[currentTurnIndex % 4] + 1
+		Adapter.nextTurn(this.state.match.id, nextTurnId)
+	}
+
+	handleLoseCard = (handId, playerId) => {
+
+		const { match: {challengerId, challengerId, turnId} } = this.state
+		if (this.state.match.phase === "challenger loses a card") {
+			this.state.match.challengerId === playerId && Adapter.updateHands(handId, {active: false})
+			if (challengerId === turnId) {
+				Adapter.nextTurn()
+			} else if (this.checkIfBlockable(this.state.match.action) && challengerId !== turnId) {
+				Adapter.updateMatch(this.state.match.id, {phase: "block"})
+			} else {
+				Adapter.updateMatch(this.state.match.id, {phase: "resolve"})
+			}
+		} else if (this.state.match.phase === "challenged loses a card") {
+			this.state.match.challengedId === playerId && Adapter.updateHands(handId, {active: false})
+			if (challengedId === turnId) {
+				Adapter.nextTurn()
+			} else if (this.checkIfBlockable(this.state.match.action) && challengerId !== turnId) {
+				Adapter.updateMatch(this.state.match.id, {phase: "block"})
+			} else {
+				Adapter.updateMatch(this.state.match.id, {phase: "resolve"})
+			}
+		}
+	}
+
+	checkIfBlockable(action) {
+		return ["foreign aid", "steal", "assassinate"].includes(action)
+	}
+
+	handleBlock() {
+		const { playerId, match: { id: matchId, targetId, turnId } } = this.state
+		if (playerId === targetId) {
+			Adapter.updateMatch(matchId, {phase: "challenge", challengedId: targetId, challengerId: turnId, action: null})
+		}
+	}
+
+	resolveAction() {
+		switch (action) {
+			case "foreign aid":
+				Adapter.updateMatch(this.state.match.id, {phase: "challenge", action: "foreign aid", challengedId: turnId})
+				break
+			case "coup":
+				Adapter.updateMatch({phase: "declare target", action: "coup"})
+				break
+			case "tax":
+				Adapter.updateMatch({phase: "declare target", action: "tax"})				
+				break
+			case "exchange cards":
+				Adapter.updateMatch({phase: "challenge", action: "exchange cards", challengedId: turnId})								
+				break
+			case "assassinate":
+				Adapter.updateMatch({phase: "declare target", action: "assassinate"})								
+				break
+			case "steal":
+				Adapter.updateMatch({phase: "declare target", action: "steal"})								
+		}
+		Adapter.nextTurn()
+	}
+
 }
 
 export default App;

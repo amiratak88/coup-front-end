@@ -23,7 +23,10 @@ class ChallengePrompt extends Component {
 
 		if (phase === "block" && playerId === targetId) {
 			return (
-				<p>{turnPlayer.name} is trying to {action}{action === "steal" && " from"} you</p>
+				<div>
+					<p>{turnPlayer.name} is trying to {action}{action === "steal" && " from"} you</p>
+					{this.renderButtons()}
+				</div>
 			)
 		} else if (phase === "challenge" && challengedId === playerId) {
 			return <p>Waiting for players to challenge</p>
@@ -32,13 +35,14 @@ class ChallengePrompt extends Component {
 				<div>
 					<p>{turnPlayer.name} is trying to {action}</p>
 					<p>Challenge them if you think they're bluffing</p>
+					{this.renderButtons()}
 				</div>
 			)
 		}
 	}
 
 	renderButtons() {
-		const { match: { phase, targetId, challengedId }, playerId } = this.props
+		const { match: { phase, targetId, challengedId }, playerId, handleChallenge, handleBlock } = this.props
 		if ((phase === "block" && playerId === targetId) || (phase === "challenge" && challengedId !== playerId)) {
 			return (
 				<Modal.Actions>
@@ -57,7 +61,11 @@ class ChallengePrompt extends Component {
 						icon='checkmark'
 						labelPosition='right'
 						content={phase === "block" ? "Block" : "Challenge"}
-						onClick={this.close}
+						onClick={e => {
+							this.close
+							phase === "block" ? handleBlock() : handleChallenge()
+						}
+						}
 					/>
 				</Modal.Actions>
 			)

@@ -13,7 +13,7 @@ export default class Board extends Component {
 			if (this.props.playerId !== p.id) {
 				return (
 					<Grid.Column  key ={p.id} color='red'>
-						<Player player={p} disabled={true} isMe={false} declareTarget={declareTarget} />
+						<Player player={p} disabled={true} isMe={false} declareTarget={declareTarget} handleLoseCard={null} />
 					</Grid.Column>
 				)
 			}
@@ -24,13 +24,13 @@ export default class Board extends Component {
 		// console.log("Board State:", this.state)
 		console.log("Board Props:", this.props)
 
-		const { match: { players, turnId, phase, action }, playerId, takeAction, declareTarget } = this.props
+		const { match: { players, turnId, phase, action }, playerId, takeAction, declareTarget, handleChallenge, handleLoseCard, handleBlock } = this.props
 		const player = players.find(p => p.id === playerId)
 
 		return (
 			<Grid style={{height: '100vh'}}>
 
-				{(phase === "challenge" || phase === "block") && <ChallengePrompt match={this.props.match} playerId={this.props.playerId}/>}
+				{(phase === "challenge" || phase === "block") && <ChallengePrompt match={this.props.match} playerId={this.props.playerId} handleChallenge={handleChallenge} handleBlock={handleBlock}/>}
 
 				<Grid.Row columns={3} style={{height: '43%'}}>
 					{this.getOpponents()}
@@ -41,7 +41,7 @@ export default class Board extends Component {
 						notifications
 					</Grid.Column>
 					<Grid.Column color='black' width={10}>
-						<Player player={players.find(p => p.id === this.props.playerId)} isMe={true} declareTarget={declareTarget}/>
+						<Player player={players.find(p => p.id === this.props.playerId)} isMe={true} declareTarget={declareTarget} handleLoseCard={handleLoseCard} />
 					</Grid.Column>
 					<Grid.Column color='pink' width={3}>
 						<ActionsList takeAction={takeAction} playerId={playerId} turnId={turnId} player={player} phase={phase} />
