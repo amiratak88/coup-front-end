@@ -5,7 +5,7 @@ import Board from './components/Board'
 import Login from './components/Login'
 import WaitingScreen from './components/WaitingScreen'
 import {threePlayers, fourPlayers}  from './playersData'
-import Adapter from './adapters/Adapter.js'
+import Adapter from './adapters/Adapter'
 import {  ActionCable } from 'react-actioncable-provider'
 import ChallengePrompt from './components/ChallengePrompt';
 

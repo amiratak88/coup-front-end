@@ -60,6 +60,14 @@ export default class Adapter {
 		})
 	}
 
+	static setTurnId(matchId, turnId) {
+		fetch(API + "matches/" + matchId, {
+			method: "PATCH",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({turnId: turnId})
+		})
+	}
+
 	// ------------------------ NON-FETCH FUNCTIONS -----------------------------------
 
 }
